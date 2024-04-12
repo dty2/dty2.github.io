@@ -1,0 +1,17 @@
+---
+title: 操作系统笔记
+categories:
+- 计算机
+- 操作系统
+tags:
+- 笔记系列
+sticky: 50
+category_bar: true
+index_img: /images/5.jpg
+---
+
+操作系统 = 抽象层
+向下封装: 硬件驱动 
+向上抽象: 系统调用
+
+Linux内核 = 进程模块 + 内存管理模块 + 文件系统模块 + 进程间通讯模块 + 网络接口模块
