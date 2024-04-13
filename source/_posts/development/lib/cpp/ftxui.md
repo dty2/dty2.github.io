@@ -2,12 +2,8 @@
 title: FTXUI
 categories:
 - 开发
-- linux
-tags:
-- Arch日记
-sticky: 99
+- 库
 category_bar: true
-index_img: /images/1.jpg
 ---
 # FTXUI库
 {% note success %}

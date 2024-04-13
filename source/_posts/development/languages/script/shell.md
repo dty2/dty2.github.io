@@ -1,9 +1,9 @@
 ---
-title: Shell Script
+title: Shell脚本
 categories:
 - 开发
-- script
-tags:
+- 语言
+- 脚本
 category_bar: true
 ---
 

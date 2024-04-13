@@ -2,6 +2,7 @@
 title: 网络编程
 categories:
 - 开发
+- 笔记
 tags:
 - 网络编程
 category_bar: true

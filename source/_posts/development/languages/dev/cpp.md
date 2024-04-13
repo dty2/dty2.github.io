@@ -3,7 +3,7 @@ title: C++笔记
 categories:
 - 开发
 - 语言
-- C++
+- 开发
 tags:
 - 笔记
 category_bar: true

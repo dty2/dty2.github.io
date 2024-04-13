@@ -1,7 +1,7 @@
 ---
 title: 病
 categories:
-- 思维与情感
+- 哲思
 - 情感
 tags:
 - 随笔系列

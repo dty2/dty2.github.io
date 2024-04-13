@@ -1,5 +1,5 @@
 ---
-title: CLI备忘录
+title: 命令备忘录
 categories:
 - 计算机
 - 操作系统

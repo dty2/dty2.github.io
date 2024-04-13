@@ -1,3 +1,12 @@
+---
+title: Make
+categories:
+- 开发
+- 语言
+- 构建 
+tags:
+category_bar: true
+---
 .PHONY : clean 伪目标，防止与文件同名
 .RECIPEPREFIX = > 使用>代替命令前的tab
 .ONESHELL: 每行命令都在一个shell中执行

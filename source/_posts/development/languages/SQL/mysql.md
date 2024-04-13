@@ -1,3 +1,11 @@
+---
+title: MySql
+categories:
+- 开发
+- 语言
+- 数据库
+category_bar: true
+---
 下载数据库:  
 `sudo apt install mysql-server`服务器端  
 `sudo apt install mysql-client`客户端  

@@ -2,11 +2,7 @@
 title: STL快查
 categories:
 - 开发
-- 语言
-- C++
-- STD
-tags:
-- STD
+- 库
 category_bar: true
 ---
 

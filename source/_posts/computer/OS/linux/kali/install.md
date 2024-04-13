@@ -4,7 +4,6 @@ categories:
 - 计算机
 - 操作系统
 - linux
-- kali
 tags:
 - 骇客日记
 category_bar: true

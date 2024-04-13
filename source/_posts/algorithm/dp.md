@@ -5,7 +5,6 @@ categories:
 tags:
 - 算法
 category_bar: true
-sticky: 97
 ---
 ### 约定
 ### 性质

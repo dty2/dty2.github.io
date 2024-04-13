@@ -5,9 +5,7 @@ categories:
 - 开发工具
 tags:
 - vim日记
-sticky: 100
 category_bar: true
-index_img: /images/2.jpg
 ---
 简介: 一切的开始，全键盘流的起点，打开Linux大门的敲门砖，成神之路的起点
 <!-- more -->

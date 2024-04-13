@@ -1,3 +1,12 @@
+---
+title: wsl2
+categories:
+- 计算机
+- 操作系统
+tags:
+- 笔记系列
+category_bar: true
+---
 安装详情见[官方教程](https://learn.microsoft.com/zh-cn/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package)
 
 FAQ:

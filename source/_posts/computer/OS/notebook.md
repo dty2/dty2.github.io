@@ -2,10 +2,9 @@
 title: 操作系统笔记
 categories:
 - 计算机
-- 操作系统
+- 网络
 tags:
 - 笔记系列
-sticky: 50
 category_bar: true
 index_img: /images/5.jpg
 ---

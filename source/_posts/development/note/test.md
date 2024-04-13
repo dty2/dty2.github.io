@@ -2,7 +2,7 @@
 title: 测试
 categories:
 - 开发
-- 测试
+- 笔记
 category_bar: true
 ---
 

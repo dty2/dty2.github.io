@@ -4,6 +4,8 @@ categories:
 - 计算机
 - 操作系统
 - linux
+tags:
+- Arch日记
 category_bar: true
 ---
 盘点那些Linux中好玩的内容

@@ -1,6 +1,8 @@
 ---
-title: net
-date: 2024-03-01 18:51:00
+title: 网络
+categories:
+- 计算机
+- 网络
 tags:
 - 学习笔记
 ---
