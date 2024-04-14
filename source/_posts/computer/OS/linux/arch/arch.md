@@ -8,7 +8,7 @@ tags:
 - Arch日记
 sticky: 99
 category_bar: true
-index_img: /images/1.jpg
+index_img: /images/2.jpg
 ---
 记录本人Arch的从安装到使用全过程
 <!-- more -->
@@ -169,7 +169,7 @@ grub-mkconfig -o /boot/grub/grub.cfg # 更新grub引导
 {% note success %}
 想要富先修路 - 代理
 {% endnote %}
-配置Arch下代理非常重要，详细内容请见{% post_link 代理 %}
+配置Arch的代理非常重要，详细内容请见{% post_link 代理 %}
 {% note danger %}
 配置代理后，一定要换源
 {% endnote %}
@@ -227,6 +227,20 @@ MAPPINGS:
       TAP: KEY_ESC
       HOLD: KEY_LEFTCTRL
 ```
+添加/etc/interception/udevmon.d/dual-function-keys.yaml，并在其中添加以下内容
+
+```
+- JOB: "intercept -g $DEVNODE | dual-function-keys -c /etc/interception/capslock2ctrlesc.yaml | uinput -d $DEVNODE"
+  DEVICE:
+    NAME: "AT Translated Set 2 keyboard" # 任务作用的设备
+- JOB: "intercept -g $DEVNODE | dual-function-keys -c /etc/interception/capslock2ctrlesc.yaml | uinput -d $DEVNODE"
+  DEVICE:
+    NAME: "FILCO Bluetooth Keyboard"
+```
+如果想把改键配置放在其他路径, 记得修改上面配置相同的路径, 几个键盘设备就对应配置几个JOB
+NAME参数的设备名称通过这个命令确定`sudo uinput -p -d /dev/input/by-id/X`, X是路径下类似keyboard名称的设备, 如果这个路径下没有, 则需要在`/dev/input`目录下慢慢找了
+
+配置写好后启动进程即可`systemctl enable --now udevmon.service`
 ## 应用软件合集
 {% note success %}
 手巧不如家什妙，磨刀不误砍柴工 - 应用软件
@@ -254,12 +268,7 @@ MAPPINGS:
 * 浏览器: edge/firefox
 * 截屏: flameshot
 * AI: copilot(edge)
-
-{% note info %}
-copilot是bing的插件，找不到copilot估计是bing的地区错误
-{% endnote %}
-
-* shell: zsh + ohmyzsh
+* Shell: zsh + ohmyzsh
 * 命令行辅助器: man + tldr
 * 文件查看器: less
 * 文件管理: ranger
@@ -277,6 +286,9 @@ copilot是bing的插件，找不到copilot估计是bing的地区错误
 看到这里，关于本人的Arch从安装到使用基本上都阐述完成
 我的故事尚未结束，但是看到这篇博客的arch新人与arch的故事才刚刚开始...
 # FAQ
+### copilot
+copilot是bing的插件，配置好代理然后用不了copilot估计是bing的地区错误
+改一下bing的设置，将bing的地区改成国外即可
 ### 未安装netmanager
 重新插上引导盘，进入安装的Arch，重新安装一下networkmanager即可
 本人当时记得安装了，所以具体操作流程本人也不知道

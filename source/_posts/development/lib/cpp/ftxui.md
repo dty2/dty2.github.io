@@ -3,7 +3,9 @@ title: FTXUI
 categories:
 - 开发
 - 库
+sticky: 97
 category_bar: true
+index_img: /images/4.jpg
 ---
 # FTXUI库
 {% note success %}

@@ -5,17 +5,19 @@ categories:
 - 开发工具
 tags:
 - vim日记
+sticky: 98
 category_bar: true
+index_img: /images/3.jpg
 ---
-# 前情提要
+## 前情提要
 - 花里胡哨毫无意义，实用才是根本
 - 不保证以下内容全部正确，在使用代码块时最好懂其作用
-# 配置简介
+## 配置简介
 配置vim简单来说分为两步，分别是编写.vimrc文件和装插件
 (没有先后顺序，是交替完善的过程，推荐第一次配置vim先编写.vimrc)
-我的.vimrc文件在[这里]()
-# 配置解读
-## 基础配置
+我的.vimrc文件在[这里](https://github.com/dty2/dotfile/blob/main/vim/.vimrc)
+## 配置解读
+### 基础配置
 以下内容对应我个人.vimrc
 - `let g:plug_url_format = 'git@github.com:%s.git'`
 使用ssh安装插件，能避免一些众所周知的问题
@@ -58,10 +60,7 @@ if executable(s:clip)
     augroup END
 endif
 ```
-
----
-
-## 操作配置
+### 操作配置
 - `let mapleader= ' '` 空格作为leader键位
 - `nnoremap <leader>w :w<CR>` leader + w 保存
 - `nnoremap <leader>q :q<CR>` leader + q 退出
@@ -85,14 +84,12 @@ endif
 - `nnoremap <leader>sk :res +5<CR>` 分屏大小竖向增加5px
 - `nnoremap <c-h> <c-w>h` ctrl + h 光标移动到左分屏
 - `nnoremap <c-l> <c-w>l` ctrl + l 光标移动到右分屏  
-
-# 装插件
+## 装插件
 给vim装插件犹如给手机加翅膀，让其开启"飞行模式"
 使用vim不用插件，几乎等同于吃饭不吃菜，只吃主食
 以下内容中的依赖使用debain的包管理器安装
 对于arch用户，若非需要特殊插件，否则直接用pacman获取即可
-
-## vim-plug
+### vim-plug
   * 介绍: 插件管理器
   * 安装vim-plug
     ```
@@ -117,19 +114,13 @@ endif
       在两个call中间删除`Plug 'xxx-xxx-xxx'`
       更新配置文件`source ~/.vimrc`
       插件安装`PlugClean`
-
----
-
-## Nerdtree
+### Nerdtree
   - 介绍: 文件树
   - 配置:
     - `nnoremap <leader>n :NERDTreeToggle<CR>` 开关
     - `let NERDTreeQuitOnOpen = 1` 打开文件自动关闭
     - `let NERDTreeShowHidden = 1` 显示隐藏文件
-
----
-
-## Airline & Airline Themes
+### Airline & Airline Themes
   - 介绍: 状态栏 + 美化
   - 安装依赖: powerline: `sudo apt-get install fonts-powerline` (也可不下载)
   - 配置:
@@ -158,10 +149,7 @@ endif
   - FAQ:
     - 获取字体命令不生效则手动上powerline仓库[去安装](https://github.com/powerline/fonts)
     - 如果你在使用wsl2的话，需要你检查你的windows是否有字体集，如果没有则需要在windows上安装相应字体集，并在终端模拟器上进行配置
-
----
-
-## Tagbar
+### Tagbar
   - 介绍: 标签栏
   - 安装依赖: ctags: 执行`sudo install apt exuberant-ctags`下载ctags
   - 配置:
@@ -169,21 +157,12 @@ endif
     - `let g:tagbar_width = 20` 设置tagbar的宽度为20
     - `let g:tagbar_autofocus = 1` 打开后自动将光标置入其中
     - `let g:tagbar_autoclose = 1` 选择确定后自动关闭
-
----
-
-## vim-Surround
+### vim-Surround
   - 介绍: 围绕指定内容增加包裹字符
   - FAQ: [What does the "y" stand for in "ysiw"?](https://github.com/tpope/vim-surround/issues/128)
-
----
-
-## Gruvbox
+### Gruvbox
   - 介绍: vim主题
-
----
-
-## visual-multi
+### visual-multi
   - 介绍: 多光标
   - 配置:
     - `let g:vM_theme = 'iceblue'` 主题为iceblue
@@ -194,16 +173,10 @@ endif
       let g:vM_maps['Add Cursor Up'] = '<C-k>'` ctrl + k 向上增加光标
       let g:vM_maps['Add Cursor Down'] = '<C-j>'` ctrl + j 向下增加光标
       ```
-
----
-
-## Easymotion
+### Easymotion
   - 介绍: 闪现，快速跳转
   - 配置: `map <Leader><leader> <Plug>(easymotion-s)` leader + leader 开启闪现
-
----
-
-## Coc-nvim
+### Coc-nvim
   - 介绍: 自动补全平台
   - 安装依赖: nodejs
     这里展示通过nvm安装，安装nvm`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash`
@@ -236,9 +209,8 @@ endif
     - 当执行`CocCommand tabnine.openConfig`的时候，没有任何事发生
       这可能是由于相应的配置文件不存在所导致的。可以查看在.config目录下存不存在Tabnine文件。如果不存在则证明配置文件缺失。导致配置文件缺失可能是由于`./config/coc/extensions/coc-tabnine-data/binaries/4.5.19/x86_64-unknown-linux-musl/Tabnine`文件没有执行权限所导致的。你需要给其增加执行权限`chmod +x Tabnine`。接着执行`:CocCommand tabnine.updateTabNine`, 在这时你需要按压其他键位，你会看到在状态栏中有个进度条，让其到达100%即可。最后重新下载`:CocInstall coc-tabnine` 并尝试 `:CocCommand tabnine.openConfig` 即可
     - 在使用kali的时候，由于ssh并未设置相应的端口，导致下载插件失败，只需将端口由10808更改成10810即可
-
-# 其他
-## 构建vim
+## 其他
+### 构建vim
 很多时候，原生vim满足不了我们的需求  
 举个最简单的例子，我们需要vim支持“+clipboard”，但是从pacman或者apt等包管理器安装的vim并不支持clipboard  
 这时候，就需要我们删除掉我的用包管理器安装的vim，手动去github上clone下来vim的源码，手动去在本地编译它
@@ -255,10 +227,8 @@ endif
 - 查询cpu数量`cat /proc/cpuinfo | less` (ps:查看逻辑cpu数量，下面编译的时候使用-jx来进行并行编译)  
 - `sudo make -j8` + `sudo make install`  (ps:注意看vim官方编译教程，上面要求命令执行在固定位置)
 - 查看vim版本`vim --version`,看是否有"+clipboard"，如果有则构建成功
-
 PS：不建议Arch用户这么做，这可能会导致包冲突等问题  
 目前，在Arch上如何解决vim的剪贴板问题，我也不知道  
-
 - 教训: 最初我在重新编译vim的时候，是在一篇博客的指导下完成的。最初我在查阅该博客的时候，我并未打算让vim支持lua等内容。可是当时我在照着那个博客配置参数的时候，并未注意到`--enable-fail-if-missing`这个参数，这个参数的意思是只有每个参数都配置成功才整体配置成功。但是由于我未安装lua等相关依赖，又照搬人家博客中的配置参数(含有与lua有关的参数)，最终导致我怎么尝试也不好使。最终无奈，特意查询了每个参数的含义后我才明白是怎么回事。
 FAQ:
 - no terminal library found
@@ -273,8 +243,7 @@ FAQ:
 
 - 构建失败删除vim删不了
   进如`/user/local/bin`中删除vim，之后再删除之前构建vim的vim目录，别忘了使用sudo
-
-## 帮助文档
+### 帮助文档
 [vim webpage address](https://www.vim.org/)
 [vim github address](https://github.com/vim/vim)
 [Vim book](https://www.truth.sk/vim/vimbook-OPL.pdf)

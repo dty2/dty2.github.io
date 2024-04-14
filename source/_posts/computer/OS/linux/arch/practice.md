@@ -6,9 +6,31 @@ categories:
 - linux
 tags:
 - Arch日记
-sticky: 99
 category_bar: true
 ---
+## 基本命令
+## sudo
+简介: 提权工具
+需要将想使用sudo命令的用户添加到sudoers文件或sudo组中
+`usermod -aG sudo username`
+
+## 其它命令
+## nmcli
+networkmanager管理网络
+```
+sudo systemctl restart NetworkManager #重启
+```
+
+## hexo博客
+1. 博客启动命令 `docker exec -it blog sh`
+2. 博客在docker的使用
+```
+hexo clean # 清空缓存
+hexo generate # 生成静态页面
+hexo deploy # 部署
+```
+外界需要用git进行同步更新和push
+ 
 # git
 用于版本控制
 ```
@@ -22,7 +44,7 @@ git rm -rf --cached . # 清除git缓存
 目录树
 ```
 tree -d # 只显示目录
-tree -L [x] # 显示到x级目录
+tree -L x # 显示到x级目录
 ```
 # tldr
 too long don't read 命令快速入手
@@ -119,8 +141,6 @@ real: xxx
 user: 用户态
 sys: 内核态
 ```
-# nmcli
-networkmanager管理网络
 # fc-list
 显示当前系统所有可使用的字体
 /usr/share/fonts/pc/Px_IBM_3270pc.ttf: Px IBM 3270pc:style=Regular
@@ -131,10 +151,6 @@ networkmanager管理网络
 # useradd 和 adduser
 useradd 低级命令，具体需要指定具体内容
 adduser 高级命令(小白使用)
-# sudo
-提权工具
-需要将想使用sudo命令的用户添加到sudoers文件或sudo组中
-`usermod -aG sudo username`
 # passwd
 指定root密码
 # 常见文件 

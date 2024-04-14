@@ -8,14 +8,18 @@ tags:
 category_bar: true
 ---
 
-# cmake 快速使用
+## cmake 快速使用
 1. `touch CMakeLists.txt && mkdir build`
 2. `cd build`
 3. `cmake ..`
 4. `make`
 5. `./project # 运行可执行文件即可` 
 
-# 链接第三方库
+## 变量
+`CMAKE_CURRENT_BINARY_DIR`
+二进制目录, build下目录
+
+## 链接第三方库
 * linux环境且库在系统默认路径下
 
 ```
