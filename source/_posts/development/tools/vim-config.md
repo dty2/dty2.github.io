@@ -5,9 +5,7 @@ categories:
 - 开发工具
 tags:
 - vim日记
-sticky: 98
 category_bar: true
-index_img: /images/3.jpg
 ---
 ## 前情提要
 - 花里胡哨毫无意义，实用才是根本

@@ -6,7 +6,6 @@ categories:
 tags:
 - 笔记系列
 category_bar: true
-index_img: /images/5.jpg
 ---
 
 操作系统 = 抽象层

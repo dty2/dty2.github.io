@@ -6,21 +6,32 @@ categories:
 - linux
 tags:
 - Arch日记
+sticky: 95
 category_bar: true
+index_img: /images/5.jpg
 ---
 盘点那些Linux中好玩的内容
 <!-- more -->
-### oneko
-桌宠
+## 装逼
 ### edex-ui
-终端装逼神器
-### screenkey
-可视化键入
+装逼终端
 ### cmartix
-矩阵
+装逼矩阵
+
+## 实用且装逼
+### [screenkey](https://www.thregr.org/wavexx/software/screenkey/)
+可视化键入
 ### neofetch
 系统展示
-### cowsay
-牛牛说
 ### lolcat
 彩虹输出
+
+## 有趣且实用
+### [oneko](https://onekoneko.app/)
+桌宠，默认是小猫，可爱且有趣，跨平台开源
+### cowsay
+牛说，默认是牛，还有其他内容
+并且掺杂了一些恶趣味，有兴趣的可以去探索一下
+`cowsay -l` 列出了所有可用的图案
+`cowsay -f art "hello world"` 使用绘制指定内容
+
