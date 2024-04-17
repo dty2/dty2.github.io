@@ -991,7 +991,7 @@ page404:
 # Links Page
 #---------------------------
 links:
-  enable: false
+  enable: true
   banner_img: /img/default.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
@@ -999,21 +999,9 @@ links:
   # Member item of page
   items:
     - {
-      title: "Fluid Blog",
-      intro: "主题博客",
-      link: "https://hexo.fluid-dev.com/",
-      avatar: "/img/favicon.png"
-    }
-    - {
-      title: "Fluid Docs",
-      intro: "主题使用指南",
-      link: "https://hexo.fluid-dev.com/docs/",
-      avatar: "/img/favicon.png"
-    }
-    - {
-      title: "Fluid Repo",
-      intro: "主题 GitHub 仓库",
-      link: "https://github.com/fluid-dev/hexo-theme-fluid",
+      title: "WのBlog",
+      intro: "W的博客",
+      link: "http://www.kevinwangsworld.top/",
       avatar: "/img/favicon.png"
     }
 
