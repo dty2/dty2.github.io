@@ -1,5 +1,5 @@
 ---
-title: Docker&Kubernetes
+title: Docker与Kubernetes
 categories:
 - 开发
 - 开发工具
@@ -7,6 +7,17 @@ tags:
 - 虚拟化与容器
 category_bar: true
 ---
+简介: docker与k8s使用
+<!-- more -->
+## 快速入手
+{% note info %}
+示例在最后
+{% endnote %}
+## FAQ
+* 构建docker镜像会遇到缓存问题，这是上次构件镜像的时候留下的缓存导致
+  `docker build --no-cache` 能重新构件，不利用上次的缓存
+* 镜像构件时需要本机的代理支持 `docker build --network host`
+## 示例
 * Dockerfile示例: hexo 博客环境
 ```
 FROM alpine:3.14 
@@ -45,7 +56,3 @@ networks:
     driver: bridge
 ```
 
-# FAQ
-* 构建docker镜像会遇到缓存问题，这是上次构件镜像的时候留下的缓存导致
-  `docker build --no-cache` 能重新构件，不利用上次的缓存
-* 镜像构件时需要本机的代理支持 `docker build --network host`

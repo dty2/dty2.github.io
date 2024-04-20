@@ -6,8 +6,9 @@ categories:
 tags:
 category_bar: true
 ---
-UML使用备忘
+简介: 记录UML学习相关内容
 <!-- more -->
+## 帮助
 ## 概览
 UML图根据需要绘制即可
 一般绘制顺序如下
@@ -15,9 +16,8 @@ UML图根据需要绘制即可
 ### UML分类
 ![UML分类图](/images/development/languages/UML/1.jpg)
 ### 用例图
-要素: 参与者，系统，用例，关系
-绘制目的: a用户为了获得b系统的c服务采取d操作
-![UML分类图](/images/development/languages/UML/2.jpg)
+关键: 需要从客户角度切入，客户与用例间是等价的，不要将用例图做成功能展示图
+![图](/images/development/languages/UML/2.jpg)
 ![绘制过程](/images/development/languages/UML/3.jpg)
 ### 类图
 要素: 

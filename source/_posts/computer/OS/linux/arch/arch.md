@@ -12,14 +12,16 @@ index_img: /images/2.jpg
 ---
 记录本人Arch的从安装到使用全过程
 <!-- more -->
-{% note success %}
-因为热爱，所以执着
-{% endnote %}
 {% note danger %}
 详细内容请看官方文档和第三方辅助文档
 以下内容仅为记录和个人参考，不保证正确
 {% endnote %}
-# 序
+### 帮助
+* [官方安装指南](https://wiki.archlinuxcn.org/wiki/安装指南)
+* [第三方辅助文档1](https://archlinuxstudio.github.io/ArchLinuxTutorial/#/)
+* [第三方辅助文档2](https://arch.icekylin.online/)
+* [参考视频](https://www.bilibili.com/video/BV1fk4y1w7wq/?spm_id_from=333.999.0.0&vd_source=8836eda798f42e634172036484104534https://arch.icekylin.online/)
+### 序
 Linux版本千千万，为何独选Arch？
 * 可定制化程度高
 * 有相当完善的帮助文档
@@ -27,22 +29,16 @@ Linux版本千千万，为何独选Arch？
 * 采用滚动更新
 * Arch社区很友好
 * ~~听说Arch安装困难，想装一个用来装逼~~
-# 安装Arch
-## 安装前之前
-阅读/观看以下内容
-* [官方安装指南](https://wiki.archlinuxcn.org/wiki/安装指南)
-* [第三方辅助文档1](https://archlinuxstudio.github.io/ArchLinuxTutorial/#/)
-* [第三方辅助文档2](https://arch.icekylin.online/)
-* [参考视频](https://www.bilibili.com/video/BV1fk4y1w7wq/?spm_id_from=333.999.0.0&vd_source=8836eda798f42e634172036484104534https://arch.icekylin.online/)
-## 安装前
-### 准备引导启动盘
+### 安装Arch
+#### 安装前
+##### 准备引导启动盘
 具体内容见{% post_link Kali安装 %}
 虽然制作的是kali的启动盘，但是流程大体相似
 {% note info %}
 为什么这里放置的是制作kali的启动盘呢？
 因为当初我最开始在真机上安装的Linux版本是Kali并记录下了笔记到制作Arch的启动盘的时候，就懒得写笔记了，反正都大差不差。置于为什么是Kali，懂的都懂
 {% endnote %}
-### 进入引导系统后
+##### 进入引导系统后
 {% note info %}
 手机可以访问arch官网，推荐一边看手机，一边进行安装
 {% endnote %}
@@ -53,7 +49,7 @@ Linux版本千千万，为何独选Arch？
 * 格式化(针对不同分区，格式化的方式不同)
 * 挂载(针对不同分区，挂载的方式不同)
 * 挂在到/mnt目录是因为/mnt目录是你要安装的新系统的根目录
-## 安装中
+#### 安装中
 * 选择镜像站
 
 ```
@@ -96,7 +92,7 @@ linux-zen linux-zen-headers base base-devel linux-firmware grub os-prober efiboo
 * 安装xorg包之前就关机会造成电源灯并不关闭并且没有真正关机，只是单纯黑屏
 * 不安装驱动程序是因为通用驱动一般包含在内核内
 * 注意，内核包含的驱动程序是通用驱动，但是对于如英伟达这样的就需要[特别安装驱动](#NVIDIA)
-## 安装后
+#### 安装后
 * 零碎操作备忘
 
 ```
@@ -118,22 +114,22 @@ grub-mkconfig -o /boot/grub/grub.cfg # 更新grub引导
 ```
 * 设置时区之后使用[NTP](https://en.wikipedia.org/wiki/Network_Time_Protocol)客户端使系统时间同步网络时间
 * [语言本地化](https://wiki.archlinuxcn.org/wiki/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%9C%AC%E5%9C%B0%E5%8C%96)建议遵循建议在.xprofile中进行设置
-## 安装结束
+#### 安装结束
 这时，可以重启Arch，并拔掉引导盘了
 如果一切[顺利](#grub相关)的话，电脑重启会进入grub，在那里，你可以找你的Arch系统和Windows系统。
 然后登进Arch系统，输入用户名与密码
 待以上内容都完成后
 恭喜！到了这里安装Arch可以说是基本结束了，剩下的就开始配置Arch了
-# 配置Arch
+## 配置Arch
 我的所有相关配置文件都在[这里](https://github.com/dty2/dotfile)
-## 桌面环境
+### 桌面环境
 {% note success %}
 人靠衣冠马靠鞍 - 桌面环境
 {% endnote %}
 桌面环境大体说可以有两种配置方式
 * 折腾配置：以窗口管理器为核心进行DIY
 * 简单配置：现成的桌面环境如Gnome  
-### 折腾配置
+#### 折腾配置
 配置策略: 高效实用，简洁
   1. 全键盘流工作方式，辅之必要的鼠标操作
   2. 最大化利用桌面
@@ -148,7 +144,7 @@ grub-mkconfig -o /boot/grub/grub.cfg # 更新grub引导
 * 程序启动器: [rofi](https://github.com/davatorium/rofi?tab=readme-ov-file#manpage)
 * 锁屏器软件: [i3lock-color](https://github.com/Raymo111/i3lock-color)
 * 壁纸管理: [variety](https://peterlevi.com/variety/)(需要feh支持)
-### 简单配置
+#### 简单配置
 记录第一次用linux发行版本Kali对其桌面美化的尝试
 * 参考[视频](https://www.bilibili.com/video/BV1KR4y127dR/?spm_id_from=333.1007.top_right_bar_window_history.content.click&vd_source=8836eda798f42e634172036484104534)
 * [Gnome-extension](https://extensions.gnome.org/)初次登陆需要安装[Mozilla Addons](https://addons.mozilla.org/en-US/firefox/addon/gnome-shell-integration/)扩展到Firefox和本地连接器`$ sudo apt install chrome-gnome-shell`温馨提示：基本上默认都带，无需安装
@@ -165,7 +161,7 @@ grub-mkconfig -o /boot/grub/grub.cfg # 更新grub引导
   - Auto move windows 会影响正常的workspace使用，具体导致其dynamic workspace失效，[issue](https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/290) is here!
   - Icon theme的安装脚本好像有些问题，会出现以下报错。`sed:无法读取 /home/hunter/.local/share/icons/Nordzy-dark/actions/32/dialog-selectors.svg`
     这边建议直接通过[压缩包](https://www.pling.com/s/Gnome/p/1686927)解压，手动安装
-## 代理
+### 代理
 {% note success %}
 想要富先修路 - 代理
 {% endnote %}
@@ -173,11 +169,11 @@ grub-mkconfig -o /boot/grub/grub.cfg # 更新grub引导
 {% note danger %}
 配置代理后，一定要换源
 {% endnote %}
-## 改键
+### 改键
 {% note info %}
 一切以简单实用为前提，向可移植性靠拢!
 {% endnote %}
-## 前置知识
+#### 前置知识
 ![Linux键盘工作原理](/images/computer/os/arch/kbd.png)
 xbindkeys: 实现多个组合键执行一个命令，例如ctrl+i+j = `echo hello world`
 xdotool: 模拟键位按压，例如 j = k
@@ -187,8 +183,8 @@ interception-tools: 基于evdev协议实现改键(不光能改键)
 查看xorg修饰键位: `xmodmap`
 恢复xorg键位初始设置: `setxkbmap`
 查看按下内核的键位码: `sudo showkey # 不加sudo就只能在TTY下执行`
-## 改键
-1. 方式一
+#### 改键方式
+##### 方式一
 caps -> ctrl
 通过`~/.Xmodmap`文件实现改键
 
@@ -210,7 +206,7 @@ keysym4 = mode_switch + shift + n
 因此先要实现ctrl+space=esc则需要修改mode_switch为ctrl，但是ctrl就会失效
 因此对于vim用户，不建议使用这种改键方式
 只需要添加`~/.Xomdmap`文件并在其中添加以下内容即可
-2. 方式二(推荐, Vim用户狂喜!)
+##### 方式二
 caps -> ctrl + esc
 单独按下caps时为caps，按下caps+其它键位时为ctrl
 [参考文档](https://zhuanlan.zhihu.com/p/404819427)
@@ -241,26 +237,26 @@ MAPPINGS:
 NAME参数的设备名称通过这个命令确定`sudo uinput -p -d /dev/input/by-id/X`, X是路径下类似keyboard名称的设备, 如果这个路径下没有, 则需要在`/dev/input`目录下慢慢找了
 
 配置写好后启动进程即可`systemctl enable --now udevmon.service`
-## 应用软件合集
+### 应用软件合集
 {% note success %}
 手巧不如家什妙，磨刀不误砍柴工 - 应用软件
 {% endnote %}
 {% note info %}
-本人是开源软件爱好者，并不喜欢闭源软件，尤其是连接到网络的闭源软件
+本人是开源软件爱好者，并不喜欢闭源软件，尤其是连接网络的闭源软件
 针对闭源软件的缺点本人在此不想过多赘述，懂的都懂
 本人在此也强烈建议使用开源软件避免不必要的麻烦
 {% endnote %}
 对于下面软件的使用本人的使用建议是stfw,rtfm
-### 硬件控制
+#### 硬件控制
 * 声音: alsa-utils(Alsamixer, Amixer(图形界面))
 * 亮度: light
+* 蓝牙: bluetoothmanager
 * 网络: [networkmanager](https://wiki.archlinuxcn.org/wiki/NetworkManager)
 * 电源: [tlp](https://linrunner.de/tlp/usage/index.html#start)
-
 {% note success %}
 亲测，用了2年的联想小新在tlp的battery模式下使用时长为4小时
 {% endnote %}
-### 常用软件
+#### 常用软件
 * 终端模拟器: [alacritty](https://alacritty.org/config-alacritty.html)
 * 修图: gimp
 * 图片查看器: feh
@@ -276,19 +272,20 @@ NAME参数的设备名称通过这个命令确定`sudo uinput -p -d /dev/input/b
 * 虚拟化与容器: vmware + docker
 * 版本控制: git
 * 密码管理器: pass
-# 使用Arch
+## 使用Arch
 本人的工作流比较简单
 开发: 基于docker，搭建开发环境，避免开发工具，库冲突等
-兴趣: 基于vmware，搭建网络攻防逆向等平台
-工作: 对于工作文档等内容，在windows上解决，绝不在Arch上装任何“国产”软件
+工作: 对于工作文档等内容，在windows上解决
 娱乐: 本人玩红警，在windows上解决
-# 尾声
+## 尾声
 看到这里，关于本人的Arch从安装到使用基本上都阐述完成
 我的故事尚未结束，但是看到这篇博客的arch新人与arch的故事才刚刚开始...
-# FAQ
+## FAQ
 ### copilot
 copilot是bing的插件，配置好代理然后用不了copilot估计是bing的地区错误
 改一下bing的设置，将bing的地区改成国外即可
+若改完还是不行，有一定概率是dns污染所导致
+`sudo vim /etc/resolv.conf`添加`namserver 8.8.8.8`即可(好像是google的dns解析器)
 ### 未安装netmanager
 重新插上引导盘，进入安装的Arch，重新安装一下networkmanager即可
 本人当时记得安装了，所以具体操作流程本人也不知道

@@ -7,11 +7,10 @@ sticky: 97
 category_bar: true
 index_img: /images/4.jpg
 ---
-# FTXUI库
-{% note success %}
-直接阅读源代码是解决所有疑问的最好方式
-{% endnote %}
-## FTXUI库快速入门
+简介: FTXUI的使用
+<!-- more -->
+## 帮助
+## 快速入门
 ### 简介
 dom静态无交互
 component动态有交互
