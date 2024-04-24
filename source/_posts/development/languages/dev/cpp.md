@@ -31,7 +31,7 @@ Awesome出品必属精品
 * [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 * [C++菜鸟教程](https://www.runoob.com/cplusplus/cpp-tutorial.html)
 ## 笔记
-### 语法
+### 语法解析
 ### 库
 libstdc++: GUN下的C++标准库实现，g++默认使用使用
 libc++: LLVM下的C++标准库实现，clang++更多使用

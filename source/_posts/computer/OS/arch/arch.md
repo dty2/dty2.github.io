@@ -16,12 +16,12 @@ index_img: /images/2.jpg
 详细内容请看官方文档和第三方辅助文档
 以下内容仅为记录和个人参考，不保证正确
 {% endnote %}
-### 帮助
+## 帮助
 * [官方安装指南](https://wiki.archlinuxcn.org/wiki/安装指南)
 * [第三方辅助文档1](https://archlinuxstudio.github.io/ArchLinuxTutorial/#/)
 * [第三方辅助文档2](https://arch.icekylin.online/)
 * [参考视频](https://www.bilibili.com/video/BV1fk4y1w7wq/?spm_id_from=333.999.0.0&vd_source=8836eda798f42e634172036484104534https://arch.icekylin.online/)
-### 序
+## 序
 Linux版本千千万，为何独选Arch？
 * 可定制化程度高
 * 有相当完善的帮助文档
@@ -29,16 +29,16 @@ Linux版本千千万，为何独选Arch？
 * 采用滚动更新
 * Arch社区很友好
 * ~~听说Arch安装困难，想装一个用来装逼~~
-### 安装Arch
-#### 安装前
-##### 准备引导启动盘
+## 安装Arch
+### 安装前
+#### 准备引导启动盘
 具体内容见{% post_link Kali安装 %}
 虽然制作的是kali的启动盘，但是流程大体相似
 {% note info %}
 为什么这里放置的是制作kali的启动盘呢？
 因为当初我最开始在真机上安装的Linux版本是Kali并记录下了笔记到制作Arch的启动盘的时候，就懒得写笔记了，反正都大差不差。置于为什么是Kali，懂的都懂
 {% endnote %}
-##### 进入引导系统后
+#### 进入引导系统后
 {% note info %}
 手机可以访问arch官网，推荐一边看手机，一边进行安装
 {% endnote %}
@@ -49,7 +49,7 @@ Linux版本千千万，为何独选Arch？
 * 格式化(针对不同分区，格式化的方式不同)
 * 挂载(针对不同分区，挂载的方式不同)
 * 挂在到/mnt目录是因为/mnt目录是你要安装的新系统的根目录
-#### 安装中
+### 安装中
 * 选择镜像站
 
 ```
@@ -92,7 +92,7 @@ linux-zen linux-zen-headers base base-devel linux-firmware grub os-prober efiboo
 * 安装xorg包之前就关机会造成电源灯并不关闭并且没有真正关机，只是单纯黑屏
 * 不安装驱动程序是因为通用驱动一般包含在内核内
 * 注意，内核包含的驱动程序是通用驱动，但是对于如英伟达这样的就需要[特别安装驱动](#NVIDIA)
-#### 安装后
+### 安装后
 * 零碎操作备忘
 
 ```
@@ -114,7 +114,7 @@ grub-mkconfig -o /boot/grub/grub.cfg # 更新grub引导
 ```
 * 设置时区之后使用[NTP](https://en.wikipedia.org/wiki/Network_Time_Protocol)客户端使系统时间同步网络时间
 * [语言本地化](https://wiki.archlinuxcn.org/wiki/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%9C%AC%E5%9C%B0%E5%8C%96)建议遵循建议在.xprofile中进行设置
-#### 安装结束
+### 安装结束
 这时，可以重启Arch，并拔掉引导盘了
 如果一切[顺利](#grub相关)的话，电脑重启会进入grub，在那里，你可以找你的Arch系统和Windows系统。
 然后登进Arch系统，输入用户名与密码
@@ -212,7 +212,6 @@ caps -> ctrl + esc
 [参考文档](https://zhuanlan.zhihu.com/p/404819427)
 用yay安装`interception-dual-function-keys`(其他发行版本参考仓库地址编译)
 添加/etc/interception/caps2ctrlesc.yaml文件，并在其中添加以下内容
-
 ```
 TIMING:
     TAP_MILLISEC: 200 # 点击小于200毫秒判定为esc
@@ -224,7 +223,6 @@ MAPPINGS:
       HOLD: KEY_LEFTCTRL
 ```
 添加/etc/interception/udevmon.d/dual-function-keys.yaml，并在其中添加以下内容
-
 ```
 - JOB: "intercept -g $DEVNODE | dual-function-keys -c /etc/interception/capslock2ctrlesc.yaml | uinput -d $DEVNODE"
   DEVICE:
@@ -235,7 +233,6 @@ MAPPINGS:
 ```
 如果想把改键配置放在其他路径, 记得修改上面配置相同的路径, 几个键盘设备就对应配置几个JOB
 NAME参数的设备名称通过这个命令确定`sudo uinput -p -d /dev/input/by-id/X`, X是路径下类似keyboard名称的设备, 如果这个路径下没有, 则需要在`/dev/input`目录下慢慢找了
-
 配置写好后启动进程即可`systemctl enable --now udevmon.service`
 ### 应用软件合集
 {% note success %}

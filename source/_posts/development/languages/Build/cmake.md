@@ -1,13 +1,14 @@
 ---
-title: CMake
+title: CMakeLists
 categories:
 - 开发
 - 语言
 - 构建 
 tags:
+- cmake
 category_bar: true
 ---
-CMake使用备忘
+简介: CMakeLists.txt语法笔记
 <!-- more -->
 ## cmake 快速使用
 {% note info %}
@@ -53,4 +54,3 @@ cmakedefine在值为OFF/FALSE,0和未定义的变量时不会定义
 
 XXXConfig.h和XXXConfig.in.h:
 cmake对后者进行处理并拷贝到前者中
-# 例子

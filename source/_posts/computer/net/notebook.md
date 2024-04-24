@@ -6,8 +6,8 @@ categories:
 tags:
 - 学习笔记
 ---
-### 
 
+### 
 FDM 频分复用
 TDM 时分复用
 

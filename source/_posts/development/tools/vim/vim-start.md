@@ -3,6 +3,7 @@ title: 执着与vim
 categories:
 - 开发
 - 开发工具
+- vim
 tags:
 - vim日记
 sticky: 100

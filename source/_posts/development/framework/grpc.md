@@ -4,7 +4,8 @@ categories:
 - 开发
 - 框架
 tags:
-- grpc
+- rpc
+- Google
 sticky: 98
 category_bar: true
 index_img: /images/3.jpg
