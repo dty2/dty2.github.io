@@ -20,18 +20,15 @@ Awesome出品必属精品
 {% endnote %}
 [Awesome](https://github.com/sindresorhus/awesome)
 [Awesome Cpp](https://github.com/fffaraz/awesome-cpp)
-### 个人博客
-* [Jarle's blog](https://lastviking.eu/)
 ### 库
 * [C++标准库官方](https://en.cppreference.com/w/)
 * [Boost官方](https://www.boost.org/)
 * [gRPC](https://grpc.io/)
 * [FTXUI](https://arthursonzogni.github.io/FTXUI/)
 ### 其它
-* [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 * [C++菜鸟教程](https://www.runoob.com/cplusplus/cpp-tutorial.html)
+* [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 ## 笔记
-### 语法解析
 ### 库
 libstdc++: GUN下的C++标准库实现，g++默认使用使用
 libc++: LLVM下的C++标准库实现，clang++更多使用

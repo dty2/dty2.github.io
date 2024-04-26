@@ -13,14 +13,12 @@ category_bar: true
 简介: 提权工具
 需要将想使用sudo命令的用户添加到sudoers文件或sudo组中
 `usermod -aG sudo username`
-
 ## 其它命令
 ## nmcli
 networkmanager管理网络
 ```
 sudo systemctl restart NetworkManager #重启
 ```
-
 ## hexo博客
 1. 博客启动命令 `docker exec -it blog sh`
 2. 博客在docker的使用
@@ -30,7 +28,6 @@ hexo generate # 生成静态页面
 hexo deploy # 部署
 ```
 外界需要用git进行同步更新和push
- 
 # git
 用于版本控制
 ```

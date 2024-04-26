@@ -65,7 +65,6 @@ Server = https://archlinux.uk.mirror.allworldit.com/archlinux/$repo/os/$arch    
 Server = https://mirrors.cat.net/archlinux/$repo/os/$arch    #东亚地区:日本
 ```
 * 别忘记重新安装密钥环，`pacman -S archlinux-keyring`。密钥环用于验证软件包，若不更新可能会造成密钥信任问题
-
 * 盘点安装所需包
 
 ```
@@ -74,7 +73,7 @@ linux-zen linux-zen-headers base base-devel linux-firmware grub os-prober efiboo
 {% note danger %}
 以上包不一定为必须内容，可以进新系统后再装
 不过，对于某些特殊的包，比如网络管理软件的包networkmanager就一定要安装
-对于那些[不装networkmanager](#未安装netmanager)的Arch新人，我送你四个字"生死难料"
+对于那些[不装networkmanager](#未安装netmanager)的Arch"新人"，我送你四个字"生死难料"
 {% endnote %}
 * 解释安装所需包
   - linux-zen是内核(zen是什么？详见{% post_link 操作系统常识 %})
@@ -88,7 +87,7 @@ linux-zen linux-zen-headers base base-devel linux-firmware grub os-prober efiboo
   - ntfs-3g用于读写windows类别的ntfs格式的分区
   - intel-ucode用于处理intel处理器微码更新的软件包
   - dkms用于动态内核模块支持系统，主要用于在内核升级时自动编译和安装第三方内核模块，确保与新系统兼容被nvidia-dkms依赖
-  - xorg用于x11的实现
+  - xorg是x11的具体实现
 * 安装xorg包之前就关机会造成电源灯并不关闭并且没有真正关机，只是单纯黑屏
 * 不安装驱动程序是因为通用驱动一般包含在内核内
 * 注意，内核包含的驱动程序是通用驱动，但是对于如英伟达这样的就需要[特别安装驱动](#NVIDIA)
@@ -135,7 +134,6 @@ grub-mkconfig -o /boot/grub/grub.cfg # 更新grub引导
   2. 最大化利用桌面
   3. 状态栏干净，对不必要的信息进行收纳
   4. 不花里胡哨，界面以干净为主，减少不必要的特效
-
 针对以上原则进行以i3wm为核心进行DIY
 * 显示管理器: lightdm lightdm-slick-greeter(登陆界面) 
 * 窗口管理器: [i3](https://i3wm.org/docs/)
@@ -171,12 +169,12 @@ grub-mkconfig -o /boot/grub/grub.cfg # 更新grub引导
 {% endnote %}
 ### 改键
 {% note info %}
-一切以简单实用为前提，向可移植性靠拢!
+一切以简单实用为前提，向可移植性靠拢
 {% endnote %}
 #### 前置知识
 ![Linux键盘工作原理](/images/computer/os/arch/kbd.png)
 xbindkeys: 实现多个组合键执行一个命令，例如ctrl+i+j = `echo hello world`
-xdotool: 模拟键位按压，例如 j = k
+xdotool: 模拟键位按压，例如按压j = 按压k
 interception-tools: 基于evdev协议实现改键(不光能改键)
 查看按下xorg的键位码: `xev`
 查看xorg映射键位码: `xmodmap -pke | less`
@@ -212,6 +210,7 @@ caps -> ctrl + esc
 [参考文档](https://zhuanlan.zhihu.com/p/404819427)
 用yay安装`interception-dual-function-keys`(其他发行版本参考仓库地址编译)
 添加/etc/interception/caps2ctrlesc.yaml文件，并在其中添加以下内容
+
 ```
 TIMING:
     TAP_MILLISEC: 200 # 点击小于200毫秒判定为esc
@@ -223,6 +222,7 @@ MAPPINGS:
       HOLD: KEY_LEFTCTRL
 ```
 添加/etc/interception/udevmon.d/dual-function-keys.yaml，并在其中添加以下内容
+
 ```
 - JOB: "intercept -g $DEVNODE | dual-function-keys -c /etc/interception/capslock2ctrlesc.yaml | uinput -d $DEVNODE"
   DEVICE:
@@ -272,8 +272,7 @@ NAME参数的设备名称通过这个命令确定`sudo uinput -p -d /dev/input/b
 ## 使用Arch
 本人的工作流比较简单
 开发: 基于docker，搭建开发环境，避免开发工具，库冲突等
-工作: 对于工作文档等内容，在windows上解决
-娱乐: 本人玩红警，在windows上解决
+工作: 对于工作文档等内容，在虚拟机中的windows上解决
 ## 尾声
 看到这里，关于本人的Arch从安装到使用基本上都阐述完成
 我的故事尚未结束，但是看到这篇博客的arch新人与arch的故事才刚刚开始...
@@ -283,13 +282,10 @@ copilot是bing的插件，配置好代理然后用不了copilot估计是bing的�
 改一下bing的设置，将bing的地区改成国外即可
 若改完还是不行，有一定概率是dns污染所导致
 `sudo vim /etc/resolv.conf`添加`namserver 8.8.8.8`即可(好像是google的dns解析器)
-### 未安装netmanager
+### 未安装NetworkManager
 重新插上引导盘，进入安装的Arch，重新安装一下networkmanager即可
-本人当时记得安装了，所以具体操作流程本人也不知道
 ### grub相关
 * 找不到windows是正常的，进系统后更新一下grub`sudo grub-mkconfig -o /boot/grub/grub.cfg`重启即可看到
-* 找不到Arch这种情况本人也没遇到过，不知道咋办，不过我猜大概率是配置grub的是很配置错误，和找不到networkmanager的解决办法应该差不多，插上引导盘重新设置即可
-* 找不到grub这种情况本人也没遇到过，不知道咋办，不过我猜测大概率是安装grub服务的位置安装错误，插上引导盘，确保安装服务位置正确，重新安装grub服务即可
 ### NVIDIA
 * 对于定制内核，比如我的zen内核，就需要阅读[这个](https://wiki.archlinuxcn.org/wiki/NVIDIA#%E5%AE%9A%E5%88%B6%E5%86%85%E6%A0%B8)
 * 对于具有intel和NVIDIA双显卡的笔记本需要阅读[这个](https://wiki.archlinuxcn.org/wiki/NVIDIA_Optimus)
