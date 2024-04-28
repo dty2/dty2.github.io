@@ -1,5 +1,5 @@
 ---
-title: 好玩的
+title: 论linux的可玩性
 categories:
 - 计算机
 - 操作系统
@@ -10,7 +10,7 @@ sticky: 95
 category_bar: true
 index_img: /images/5.jpg
 ---
-盘点那些Linux中好玩的内容
+简介: 盘点那些Linux中好玩的内容
 <!-- more -->
 ## 装逼
 ### edex-ui
@@ -31,7 +31,7 @@ index_img: /images/5.jpg
 ![oneko效果图](/images/computer/os/arch/oneko.png)
 ### cowsay
 牛说，默认是牛，还有其他内容
-并且掺杂了一些恶趣味，有兴趣的可以去探索一下
+其中掺杂了一些恶趣味，有兴趣可以去探索一下
 `cowsay -l` 列出了所有可用的图案
 `cowsay -f art "hello world"` 使用绘制指定内容
 效果如下

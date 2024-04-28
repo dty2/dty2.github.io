@@ -78,13 +78,11 @@ vim，编辑器之神
 - `nnoremap <leader><CR> :nohlsearch<CR>` leader+enter关闭搜索高亮
 - `nnoremap n nzz` 查找下个匹配项且置中
 - `nnoremap N Nzz` 查找上个匹配项且置中
-- `nnoremap ; :` 一键开启底部命令行
+- `nnoremap ; :` 底部命令行
 - `nnoremap R :source $MYVIMRC<CR>` 刷新配置
 - `nnoremap sl :set splitright<CR>:vsplit<CR>` 竖开分屏
 - `nnoremap <c-h> <c-w>h` ctrl + h 光标移动到左分屏
 - `nnoremap <c-l> <c-w>l` ctrl + l 光标移动到右分屏  
-- `nnoremap <leader>] :v<C-w><C-]><CR>` leader+]跳转到对应函数定义
-- `nnoremap <leader>]i :v<C-]><CR>` leader + ]i  忘了...和ctags有关
 ## 插件
 * vim-plug 插件管理器
 * Nerdtree 目录树
@@ -106,6 +104,9 @@ vim，编辑器之神
   - [帮助2](https://tuckerchapman.com/posts/getting-started-vim-airline/)
 * Tagbar 标签栏
   - 需要提前安装ctags
+  - `nnoremap <c-]> <C-]>zz` 跳转到定义处
+  - `nnoremap <C-[> :pop<CR>` 退回到上一级等同于`<C-t>`
+  - `nnoremap <leader>m :TagbarToggle<CR>` 开关
   - `nnoremap <leader>m :TagbarToggle<CR>` 开关
   - `let g:tagbar_width = 20` 设置tagbar的宽度为20
   - `let g:tagbar_autofocus = 1` 打开后自动将光标置入其中
@@ -114,13 +115,13 @@ vim，编辑器之神
   - [What does the "y" stand for in "ysiw"?](https://github.com/tpope/vim-surround/issues/128)
 * Gruvbox vim主题
 * visual-multi 多光标
-  - `let g:vM_theme = 'iceblue'` 主题为iceblue
+  - `let g:VM_theme = 'iceblue'` 主题为iceblue
   - `let g:EasyMotion_leader_key = '\'` leaderkey设为\
   - 设置映射
     ```
-    let g:vM_maps = {}`
-    let g:vM_maps['Add Cursor Up'] = '<C-k>'` ctrl + k 向上增加光标
-    let g:vM_maps['Add Cursor Down'] = '<C-j>'` ctrl + j 向下增加光标
+    let g:VM_maps = {}`
+    let g:VM_maps['Add Cursor Up'] = '<C-k>'` ctrl + k 向上增加光标
+    let g:VM_maps['Add Cursor Down'] = '<C-j>'` ctrl + j 向下增加光标
     ```
 * Easymotion 快速跳转(我更喜欢叫“闪现”)
   - `map <Leader><leader> <Plug>(easymotion-s)` leader+leader开启闪现
