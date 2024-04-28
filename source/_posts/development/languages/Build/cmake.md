@@ -16,7 +16,7 @@ category_bar: true
 {% endnote %}
 * `touch CMakeLists.txt && mkdir build`
 * `cd build`
-* `cmake ..`
+* `cmake -DCMAKE_INSTALL_PREFIX .. # 默认安装到系统下`
 * `make`
 * `./project # 运行可执行文件即可` 
 ## 链接第三方库
