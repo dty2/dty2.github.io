@@ -3,7 +3,11 @@ title: vim
 categories:
 - 开发
 - 开发工具
+tags:
+- vim
+sticky: 100
 category_bar: true
+index_img: /images/1.jpg
 ---
 简介: vim与它的配置
 <!-- more -->
