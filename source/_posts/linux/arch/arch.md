@@ -13,7 +13,7 @@ index_img: /images/linux/arch/archlogo.jpeg
 <!-- more -->
 ## 效果展示
 {% note success %}
- 在arch中基本上一切都是可以配置的...从某种程度上实现了人有多大胆地有多大产
+在arch中基本上一切都是可以配置的...从某种程度上实现了人有多大胆地有多大产
 {% endnote %}
 ![终端效果](/images/linux/arch/terminal.png)
 ![neovim效果](/images/linux/arch/codes.png)
@@ -38,7 +38,7 @@ index_img: /images/linux/arch/archlogo.jpeg
 * {% post_link 有趣的软件与彩蛋 %}
 ## 相关资源
 {% note info %}
-󰋼 容易找到的就不放置在此
+容易找到的就不放置在此
 {% endnote %}
 * [arch镜像源生成网站](https://archlinux.org/mirrorlist/)
 * [第三方辅助文档1](https://archlinuxstudio.github.io/ArchLinuxTutorial/#/)

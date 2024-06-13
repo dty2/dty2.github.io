@@ -2,6 +2,7 @@
 title: 配置arch
 categories:
 - linux
+- arch
 tags:
 - arch
 - 改键
@@ -16,14 +17,14 @@ index_img: /images/linux/arch/archlogo.jpeg
 本人所有相关配置文件都在[dotfile](https://github.com/dty2/dotfile)中
 ## 桌面环境
 {% note success %}
- 人靠衣冠马靠鞍
+人靠衣冠马靠鞍
 {% endnote %}
 桌面环境大体说可以有两种配置方式
 * 折腾配置: 围绕窗口管理器进行DIY(类比vim)
 * 简单配置: 现成的桌面环境如Gnome(类比IDE)
 温馨提示: 折腾配置的费劲程度取决于你的需求程度
 {% note danger %}
- 配置下述软件极耗精力,需要查询官方文档以及各种资料
+配置下述软件极耗精力,需要查询官方文档以及各种资料
 {% endnote %}
 需要软件如下,详细作用在arch官网中可查
 

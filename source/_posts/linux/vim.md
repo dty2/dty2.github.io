@@ -13,7 +13,7 @@ category_bar: true
 ![neovim效果](/images/linux/arch/codes.png)
 ## 相关资源
 {% note info %}
-󰋼 容易找到的就不放置在此
+容易找到的就不放置在此
 {% endnote %}
 * [编辑器圣战](https://www.bilibili.com/video/BV1XA4y1o7Lw/?spm_id_from=333.337.search-card.all.click&vd_source=8836eda798f42e634172036484104534)
 * [vimawesome(插件市场)](https://vimawesome.com/)

@@ -12,7 +12,7 @@ index_img: /images/linux/arch/archlogo.jpeg
 <!-- more -->
 ## 应用软件合集
 {% note success %}
- 手巧不如家什妙
+手巧不如家什妙
 {% endnote %}
 ### 硬件控制
 |  功能  |      软件名称     |
@@ -23,7 +23,7 @@ index_img: /images/linux/arch/archlogo.jpeg
 |  网络  |  [networkmanager](https://wiki.archlinuxcn.org/wiki/NetworkManager)   |
 |  电源  |  [tlp](https://linrunner.de/tlp/usage/index.html#start)              |
 {% note success %}
- 亲测，用了2年的联想小新在tlp的battery模式下使用时长为4小时
+亲测，用了2年的联想小新在tlp的battery模式下使用时长为4小时
 {% endnote %}
 ### 日常
 |     功能     |  软件名称  |

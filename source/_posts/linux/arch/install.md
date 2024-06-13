@@ -5,7 +5,6 @@ categories:
 - arch
 tags:
 - arch
-- 装系统
 category_bar: true
 index_img: /images/linux/arch/archlogo.jpeg
 ---
@@ -13,11 +12,11 @@ index_img: /images/linux/arch/archlogo.jpeg
 <!-- more -->
 ## 安装前
 {% note danger %}
- 文档看得越仔细,安装越顺利,反之亦然
+文档看得越仔细,安装越顺利,反之亦然
 {% endnote %}
 ### 装前须知(废话)
 {% note info %}
-󰋼 安装arch用的引导系统没有引导
+安装arch用的引导系统没有引导
 {% endnote %}
 装系统总共分三步:
 * ~~把冰箱门打开~~ 进入安装引导系统
@@ -29,7 +28,7 @@ index_img: /images/linux/arch/archlogo.jpeg
 这里使用的烧录软件是[rufus](https://rufus.ie/en/#)
 ### 配置引导系统
 {% note info %}
-󰋼 手机可以访问arch官网,推荐一边看手机，一边进行操作
+手机可以访问arch官网,推荐一边看手机，一边进行操作
 {% endnote %}
 本质上就是通过引导系统从网上下载arch内核装到磁盘中
 这里涉及网络配置,镜像地址修改,磁盘分区,挂载等(详细内容见官网教程)
