@@ -1,7 +1,7 @@
 ---
 title: arch软件
 categories:
-- linux
+- Linux
 - arch
 tags:
 - arch

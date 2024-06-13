@@ -1,7 +1,7 @@
 ---
 title: arch日记
 categories:
-- linux
+- Linux
 - arch
 tags:
 - arch

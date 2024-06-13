@@ -1,7 +1,7 @@
 ---
 title: 安装arch
 categories:
-- linux
+- Linux
 - arch
 tags:
 - arch

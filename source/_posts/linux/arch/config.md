@@ -1,7 +1,7 @@
 ---
 title: 配置arch
 categories:
-- linux
+- Linux
 - arch
 tags:
 - arch
