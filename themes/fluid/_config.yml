@@ -224,7 +224,7 @@ color:
 # Font
 font:
   font_size: 16px
-  font_family: 
+  font_family: 3270 NerdFont
   letter_spacing: 0.02em
   code_font_size: 85%
 
@@ -421,8 +421,7 @@ footer:
   content: '
     <a href="https://hexo.io/zh-cn/"><span>Hexo</span></a>
     <i class="iconfont icon-love"></i>
-    <a href="https://github.com/fluid-dev/hexo-theme-fluid"><span>Fluid</span></a>
-  '
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid"><span>Fluid</span></a> '
   # 展示网站的 PV、UV 统计数
   # Display website PV and UV statistics
   statistics:
@@ -997,36 +996,39 @@ links:
   # Member item of page
   items:
     - {
-      title: "WのBlog",
-      intro: "王同学博客",
-      link: "http://www.kevinwangsworld.top/",
-      avatar: "/img/favicon.png"
-    }
-
-    - {
       title: "zhangxiaoan的博客",
       intro: "未知，其设计模式，转载的13三个忠告等文章不错",
       link: "http://www.anger6.com/",
       avatar: "/img/favicon.png"
     }
-
     - {
       title: "Jarle's blog",
       intro: "30+年工作经验C++程序员，其grpc系列不错",
       link: "https://lastviking.eu/",
-      avatar: "/img/favicon.png"
+      avatar: "/img/friendlink/theviking_at_work.png"
     }
-
     - {
-      title: "WのBlog",
-      intro: "某北京高校CS生，有汇编等底层分析文章",
+      title: "本喵二十三",
+      intro: "北京某高校CS生，有汇编等底层分析文章",
       link: "http://labspc.com",
-      avatar: "/img/favicon.png"
+      avatar: "/img/friendlink/default.png"
+    }
+    - {
+      title: "竹林里有冰的博客",
+      intro: "浙江arch用户，其yay进阶文章不错",
+      link: "https://zhul.in/",
+      avatar: "/img/friendlink/zhulinliyoubing.png"
+    }
+    - {
+      title: "Aloha's Blog",
+      intro: "医学生，neovim，fcitx.lua插件作者",
+      link: "https://daisilia.com/",
+      avatar: "/img/friendlink/default.png"
     }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
-  onerror_avatar: /img/avatar.png
+  onerror_avatar: /img/default.png
 
   # 友链下方自定义区域，支持 HTML，可插入例如申请友链的文字
   # Custom content at the bottom of the links
