@@ -1,5 +1,6 @@
 ---
 title: Arch Linux
+sticky: 10
 ---
 
 Arch Linux

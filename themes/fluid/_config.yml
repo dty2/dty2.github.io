@@ -995,36 +995,6 @@ links:
   # 友链的成员项
   # Member item of page
   items:
-    - {
-      title: "zhangxiaoan的博客",
-      intro: "未知，其设计模式，转载的13三个忠告等文章不错",
-      link: "http://www.anger6.com/",
-      avatar: "/img/favicon.png"
-    }
-    - {
-      title: "Jarle's blog",
-      intro: "30+年工作经验C++程序员，其grpc系列不错",
-      link: "https://lastviking.eu/",
-      avatar: "/img/friendlink/theviking_at_work.png"
-    }
-    - {
-      title: "本喵二十三",
-      intro: "北京某高校CS生，有汇编等底层分析文章",
-      link: "http://labspc.com",
-      avatar: "/img/friendlink/default.png"
-    }
-    - {
-      title: "竹林里有冰的博客",
-      intro: "浙江arch用户，其yay进阶文章不错",
-      link: "https://zhul.in/",
-      avatar: "/img/friendlink/zhulinliyoubing.png"
-    }
-    - {
-      title: "Aloha's Blog",
-      intro: "医学生，neovim，fcitx.lua插件作者",
-      link: "https://daisilia.com/",
-      avatar: "/img/friendlink/default.png"
-    }
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
