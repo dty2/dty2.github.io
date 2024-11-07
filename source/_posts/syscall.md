@@ -1,25 +1,21 @@
----
-title: 系统调用
-sticky: 500
----
+# 系统调用流程
 
-记录学习系统调用过程
-<!-- more -->
-
-# 系统调用
-
-好奇想知道系统调用到底是啥样，因此有了下文
-
-> [!TIP]
-> 底层探究之首，将重点放在"系统调用"上
+想了解系统调用实现原理，因此有了下文
 
 ## 前期准备
 
-### 源码
+### 工具
 
-- [glibc源码获取](https://sourceware.org/glibc/started.html)(版本：2.40)
-- [linux源码仓库](https://github.com/torvalds/linux)(版本：6，6点几忘了)
-- 示例代码如下
+需要一堆工具，缺啥装啥吧，反正实验环境是在arch linux，装啥都方便
+
+### 源码与可执行文件
+
+#### 辅助代码
+
+准备以下代码与相应可执行文件
+
+> [!TIP]
+> 要静态编译(-static)，不然等下在qemu中没有ld也没有glibc.so就傻了
 
 ``` C
 // NOTE: fork.c
@@ -32,15 +28,104 @@ int main () {
 }
 ```
 
-### 工具
+#### 内核
 
-需要一堆工具，缺啥装啥吧，实验环境是在arch linux，因此装啥都方便
+> [!TIP]
+> 也可以不编译内核，如果本身就在使用linux的话，可以在boot目录下找到Linux的映像文件
 
-## 库源码阅读
+[kernel仓库](https://github.com/torvalds/linux)(版本：6，6点几忘了)
+
+1.编译内核
+
+``` bash
+make help
+make defconfig
+make nconfig / make menuconfig
+make -j$(nproc) 2>&1 | tee build.log
+```
+
+> [!TIP]
+> 注意，在配置内核的时候需要开启调试信息
+> kernel hacking -> compile-time checks and compiler options -> Generate DWARF Version 5 debuginfo
+
+编译成功结果
+
+``` bash
+  MKPIGGY arch/x86/boot/compressed/piggy.S
+  AS      arch/x86/boot/compressed/piggy.o
+  LD      arch/x86/boot/compressed/vmlinux
+  ZOFFSET arch/x86/boot/zoffset.h
+  OBJCOPY arch/x86/boot/vmlinux.bin
+  AS      arch/x86/boot/header.o
+  LD      arch/x86/boot/setup.elf
+  OBJCOPY arch/x86/boot/setup.bin
+  BUILD   arch/x86/boot/bzImage
+Kernel: arch/x86/boot/bzImage is ready  (#1)
+```
+
+2. 创建临时文件系统目录结构(initramfs)
+
+``` bash
+mkdir initramfs
+cd initramfs
+mkdir bin proc sys
+cd bin
+mkdir -p example/
+```
+
+---
+
+3. 安装busybox
+
+``` bash
+cd initramfs/bin/
+curl -OL https://www.busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox
+chmod +x busybox
+```
+
+> [!TIP]
+> [busybox](https://busybox.net/)非常神奇，类似于C语言中的联合体，其将很多必要命令和工具集成在一起
+
+`for cmd in $(./busybox --list); do ln -s busybox $cmd; done` 创建符号连接到busybox，代替必要工具
+
+别忘了将将辅助代码的可执行文件放到example中
+
+---
+
+4. 创建启动脚本`touch init`
+
+以下是脚本内容
+
+``` bash
+#!/bin/sh
+mount -t proc none /proc
+mount -t sysfs none /sys
+exec /bin/sh
+```
+
+别忘记给权限`chmod +x init`
+
+---
+
+5. 临时文件系统镜像制作
+
+``` bash
+cd initramfs
+find . | cpio -H newc -o | gzip > ../initramfs.cpio.gz
+```
+
+> [!TIP]
+> cpio是归档工具
+
+#### glibc
+
+[glibc源码获取](https://sourceware.org/glibc/started.html)(版本：2.40)
+
+## 库源码
 
 ### 封装函数
 
-`gcc -g fork.c`生成可执行文件用于gdb调试，之后`gdb -tui a.out`看看backtrace
+用gdb看调用栈
 
 ``` gdb
 (gdb) layout split # 看源码同时看汇编
@@ -64,7 +149,7 @@ int main () {
 ```
 
 > [!TIP]
-> 这里其实跳过了一大步，通过各种尝试，发现猜测和`gcc -E`两种方法推断宏比较靠谱
+> 这里其实跳过了一大步，通过各种尝试，发现"猜测"和`gcc -E`两种方法推断宏比较靠谱
 
 ### 解析宏
 
@@ -80,12 +165,15 @@ int main () {
 #endif
 ```
 
-本人就掉到这个坑里，没注意到ifndef，最后靠偶遇一篇博客解决的
+本人就掉到这个坑里，一直没注意到ifndef，直到偶遇一篇[博客](https://dumphex.github.io/2020/03/01/syscall/)才发现找错了
 
-真正的宏在头文件`#include <sysdep.h>`中
+而真正的宏在头文件`#include <sysdep.h>`中
+
+> [!TIP]
+> "sysdeps/unix/sysv/linux/x86_64/sysdep.h"，这个文件引用可以在arch-fork.h开头的头文件引用中找到，有的系统调用文件间接包含此头文件
 
 ``` C
-// NOTE: linux/sysdep.h
+// NOTE: sysdeps/unix/sysv/linux/x86_64/sysdep.h
 
 /* Define a macro which expands into the inline wrapper code for a system
    call.  It sets the errno and returns -1 on a failure, or the syscall
@@ -156,7 +244,7 @@ int main () {
 
 即`__NR_clone`，也就是`#define __NR_clone 56`，在arch-syscall.h中可以找到
 
-通过查询[文档](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html?wapkw=x86-64%20instruction%20set)得知syscall指令的行为
+通过查询[Intel文档](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html?wapkw=x86-64%20instruction%20set)得知syscall指令的大概行为
 
 > RCX := RIP; 保存rip
 > RIP := IA32_LSTAR; 将rip设置为系统调用入口地址
@@ -164,23 +252,75 @@ int main () {
 > RFLAGS := RFLAGS AND NOT(IA32_FMASK); 清空标志寄存器的一些位
 > CPL := 0; 设置保护模式为0，即内核模式
 
+> [!TIP]
+> 以上是伪代码，":="其实就是赋值的意思，是pascal语言的赋值写法
+
 其中IA32_LSTAR是跳转关键，即系统调用内核的入口
 
-IA32_LSTAR是MSR寄存器，即模型特定寄存器，专门用来存放系统调用入口地址，在内核启动时会对其进行初始化
+IA32_LSTAR是MSR寄存器，即模式特定寄存器，专门用来存放系统调用入口地址，查阅Intel手册得知IA32_LSTAR的地址为c000_0082H
 
-简单总结一句就是，系统调用被glibc封装，在用户空间本质上做的是宏封装内联汇编传参
+> [!TIP]
+> Intel手册有有多种形式，查找MSR不要看合集，直接查找第四卷即可
+
+总结用户态的所有操作就是:系统调用被glibc封装，在glibc本质上做的是宏封装内联汇编传参
 
 ## 内核剖析
 
-### 寻找入口
+### 内核入口
 
-进入内核前有必要看看内核文档
+上文提到syscall将rip置成IA32_LSTAR寄存器中的值，即系统调用入口地址
 
-查看文档，直接搜syscall很容易找到[这里](https://www.kernel.org/doc/html/latest/core-api/entry.html#syscalls)
+由于MSR是特殊寄存器，无法直接使用gdb查看其值，可以通过gdb的call指令调用内核函数来实现
 
-文档上写的很清楚，系统调用入口代码从汇编代码开始，在建立特定于架构的低级状态和堆栈框架后调用低级C代码
+> [!TIP]
+> 这里其实有很多方式可以查看系统调用入口地址
+> 根据不同限制，比如不能上网查，不能查看内核源码等等
+> 因此有以下方法
+> 1. 上网直接查/问AI/问大佬/查博客
+> 2. 先查手册得知IA32_LSTAR地址，再通过rdmsr查出入口(需要把rdmsr搞到bin中，要不然只能看本机的，就算rsmsr搞到bin中也得注意这个rdmsr是需要静态编译的)
+> 3. 通过编写动态内核模块通过调用内核函数来实现
+> 4. 查手册得知IA32_LSTAR地址，再通过gdb的call命令调用内核函数来实现
+> 5. 通过上网查得知syscall_init初始化MSR，再通过gdb打断点找到入口
+> 其实不止以上方式，条条大路通罗马罢了
+> 但经过对比衡量，选择了通过call调用内核函数`native_read_msr`来实现
+> `native_read_msr`定义在文件include/asm/msr.h中
 
-但是这里依旧不知道系统调用入口在哪里，不过现在已经知道系统调用的样子大致如下
+### 动态分析
+
+使用qemu将内核跑起来，并通过gdb进行远程调试
+
+`qemu-system-x86_64 -kernel arch/x86/boot/bzImage -initrd initramfs.cpio.gz -append "nokaslr console=ttyS0" -serial mon:stdio -s -S`启动内核
+
+- nokaslr 禁用内核地址空间分布随机化
+- -s 是启动gdb远程调试
+- -S 是从头启动
+
+`gdb -q vmlinux`启动gdb找系统调用入口
+
+``` gdb
+$ gdb -q vmlinux
+Reading symbols from vmlinux...
+(gdb) target remote :1234  # 连接到qemu gdb服务，1234是人家默认端口，别瞎乱改
+0x000000000000fff0 in exception_stacks ()
+(gdb) call native_read_msr(0xc0000082)
+$3 = 18446744071595622528
+(gdb) b *18446744071595622528
+Breakpoint 1 at 0xffffffff82000080: file arch/x86/entry/entry_64.S, line 89.
+(gdb)
+```
+
+通过查询得知入口在arch/x86/entry/entry_64.S第89行
+
+> [!TIP]
+> 这里其实跳过了中断处理，但并不是讨论重点，因此略过
+
+### 入口汇编
+
+查看内核文档，直接搜syscall很容易找到[这里](https://docs.kernel.org/trace/events-msr.html)
+
+文档上写的很清楚，系统调用入口代码从汇编代码开始，在建立特定架构的低级状态和堆栈框架后调用低级C代码
+
+代码大致如下
 
 ``` C
 // NOTE: 取自内核文档
@@ -198,154 +338,7 @@ noinstr void syscall(struct pt_regs *regs, int nr)
 }
 ```
 
-不过仅依此并不能找到系统调用入口，因为并不知道这段代码在哪个文件
-
-而且文档中写到`A typical syscall handling function invoked from low-level assembly code looks like this:`
-
-也就是说，这段代码在系统调用中并不是完全长这样，至此线索就断开了
-
-不过很快就想到，上文提到syscall将rip置成IA32_LSTAR寄存器中的值，即系统调用入口地址
-
-因此想到可以通过动态分析让gdb输出IA32_LSTAR寄存器的值，所以接下来要跑内核
-
-#### 跑内核
-
-使用qemu将内核跑起来
-
-1. kernel镜像
-
-``` bash
-make help
-make defconfig
-make nconfig / make menuconfig
-make -j$(nproc) 2>&1 | tee build.log
-```
-
-> [!TIP]
-> 注意，在配置内核的时候需要开启调试信息
-> kernel hacking -> compile-time checks and compiler options -> Generate DWARF Version 5 debuginfo
-
-编译成功结果
-
-``` bash
-  MKPIGGY arch/x86/boot/compressed/piggy.S
-  AS      arch/x86/boot/compressed/piggy.o
-  LD      arch/x86/boot/compressed/vmlinux
-  ZOFFSET arch/x86/boot/zoffset.h
-  OBJCOPY arch/x86/boot/vmlinux.bin
-  AS      arch/x86/boot/header.o
-  LD      arch/x86/boot/setup.elf
-  OBJCOPY arch/x86/boot/setup.bin
-  BUILD   arch/x86/boot/bzImage
-Kernel: arch/x86/boot/bzImage is ready  (#1)
-```
-
-2. 临时文件系统镜像(initramfs)
-
-`mkdir initramfs/{bin,proc,sys}`
-
----
-
-安装busybox
-
-``` bash
-cd initramfs/bin/
-curl -OL https://www.busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox
-chmod +x busybox
-```
-
-> [!TIP]
-> [busybox](https://busybox.net/)非常神奇，类似于C语言中的联合体，其将很多必要命令和工具集成在一起
-
-`for cmd in $(./busybox --list); do ln -s busybox $cmd; done` 创建符号连接到busybox，代替必要工具
-
----
-
-创建启动脚本`touch init`，以下是脚本内容
-
-``` bash
-#!/bin/sh
-mount -t proc none /proc
-mount -t sysfs none /sys
-exec /bin/sh
-```
-
-别忘记给权限`chmod +x init`
-
----
-
-镜像制作
-
-``` bash
-cd initramfs
-find . | cpio -H newc -o | gzip > ../initramfs.cpio.gz
-```
-
-> [!TIP]
-> cpio是归档工具
-
-3. ~~原神，启动！~~
-
-`qemu-system-x86_64 -kernel arch/x86/boot/bzImage -initrd initramfs.cpio.gz -append "nokaslr console=ttyS0" -serial mon:stdio -s`启动内核
-
-> [!TIP]
-> VNC是远程控制工具，不过这里用不到，是用qemu足够
-
-`gdb -q vmlinux`启动gdb
-
-``` gdb
-$ gdb -q vmlinux
-Reading symbols from vmlinux...
-(gdb) target remote :1234  # 连接到qemu gdb服务，1234是人家默认端口，别瞎乱改
-0x000000000000fff0 in exception_stacks ()
-(gdb) 
-```
-
-#### gdb调试
-
-内核跑起来了，结果发现由于IA32_LSTAR属于特定模式的寄存器，`info r`查不到
-
-因此想通过IA32_LSTAR存放的系统调用入口地址来进入内核就失败了
-
-万般无奈，因此突发奇想，之前的查看内核文档时，其中介绍了系统调用的大致样子，因此在gdb中对那些函数打断点
-
-这样就可以通过backtrace反推出来入口地址
-
-> [!TIP]
-> 其实完全是碰运气，很有可能那些函数名都不在内核中，当然，除了这种方式其实还有很多种方式找到内核入口
-> 但是本人就执着于不依赖网络，仅凭文档和gdb找到系统调用入口，因此才有这种做法
-
-接着通过尝试，成功将断点打到了`syscall_enter_from_user_mode`函数上，由此查看backtrace如下
-
-``` gdb
-(gdb) b syscall_enter_from_user_mode
-Breakpoint 1 at 0xffffffff81f7e1c6: file ./arch/x86/include/asm/irqflags.h, line 26.
-(gdb) c
-Continuing.
-
-Breakpoint 1, syscall_enter_from_user_mode (regs=0xffffc90000013f58, syscall=0)
-    at ./include/linux/entry-common.h:194
-194		enter_from_user_mode(regs);
-(gdb) backtrace
-#0  syscall_enter_from_user_mode (regs=0xffffc90000013f58, syscall=0)
-    at ./include/linux/entry-common.h:194
-#1  do_syscall_64 (regs=0xffffc90000013f58, nr=0) at arch/x86/entry/common.c:79
-#2  0xffffffff82000130 in entry_SYSCALL_64 () at arch/x86/entry/entry_64.S:121
-#3  0x00007ffd1c9ed679 in ?? ()
-#4  0x0000000000000000 in ?? ()
-(gdb) 
-```
-
-所以，很容易就发现了名为`entry_SYSCALL_64`这个函数，仅仅看名字大概就能猜出来这就是苦苦寻找的系统调用入口
-
-> [!TIP]
-> 这里其实跳过了中断处理，但并不是讨论重点，因此掠过
-
-### 入口汇编
-
-到了这里，可以暂时把gdb放下，可以直接去看内核代码
-
-查看arch/x86/entry/entry_64.S文件，以下是文件开头的注释
+接着查看arch/x86/entry/entry_64.S文件，以下是文件开头的注释
 
 ``` asm
 // NOTE: arch/x86/entry/entry_64.S
@@ -392,9 +385,9 @@ Breakpoint 1, syscall_enter_from_user_mode (regs=0xffffc90000013f58, syscall=0)
  */
 ```
 
-第一段注释写的很清楚，entry_SYSCALL_64就是我要找的函数
+第一段注释写的很清楚，entry_SYSCALL_64就是入口函数
 
-第三段注释写的很清楚，64位系统调用保存rip到rcx，清空rflags.rf,接着保存rflags到r11，之后加载新的ss，cs和rip从之前的程序MSR中
+第三段注释写的也很清楚，64位系统调用保存rip到rcx，清空rflags.rf,接着保存rflags到r11，之后加载新的ss，cs和rip从之前的程序MSR中
 
 rflags被另一个MSR的值覆盖(所以CLS和CLAC不被需要)，系统调用不会保存东西到栈上，也不会改变rsp
 
@@ -493,6 +486,7 @@ SYM_INNER_LABEL(entry_SYSRETQ_end, SYM_L_GLOBAL)
 	int3
 SYM_CODE_END(entry_SYSCALL_64)
 ```
+
 第一次看啥也看不懂，深吸一口气再看一次，就看到了很多注释
 
 循着注释看，就看明白了，这里再次[回顾glibc对寄存器的设置](#阅读源码)，真相就大白了
@@ -525,85 +519,6 @@ SYM_INNER_LABEL(entry_SYSCALL_64_after_hwframe, SYM_L_GLOBAL)
 跳转代码发现do_syscall_64，对照`do_syscall_64`函数传参看汇编代码，很容易就知道注释中的`pt_regs`是什么东西了
 
 其实就是do_syscall_64的一个结构体形参，上边的汇编代码只不过是手动汇编传参的写法而已
-
-到此，光知道pt_regs是个结构体还不行，针对传参的内容，还需要看看结构体的内部构造
-
-因此跳转查看其定义
-
-``` C
-// NOTE: arch/x86/include/asm/ptrace.h
-
-struct pt_regs {
-	/*
-	 * C ABI says these regs are callee-preserved. They aren't saved on
-	 * kernel entry unless syscall needs a complete, fully filled
-	 * "struct pt_regs".
-	 */
-	unsigned long r15;
-	unsigned long r14;
-	unsigned long r13;
-	unsigned long r12;
-	unsigned long bp;
-	unsigned long bx;
-
-	/* These regs are callee-clobbered. Always saved on kernel entry. */
-	unsigned long r11;
-	unsigned long r10;
-	unsigned long r9;
-	unsigned long r8;
-	unsigned long ax;
-	unsigned long cx;
-	unsigned long dx;
-	unsigned long si;
-	unsigned long di;
-
-	/*
-	 * orig_ax is used on entry for:
-	 * - the syscall number (syscall, sysenter, int80)
-	 * - error_code stored by the CPU on traps and exceptions
-	 * - the interrupt number for device interrupts
-	 *
-	 * A FRED stack frame starts here:
-	 *   1) It _always_ includes an error code;
-	 *
-	 *   2) The return frame for ERET[US] starts here, but
-	 *      the content of orig_ax is ignored.
-	 */
-	unsigned long orig_ax;
-
-	/* The IRETQ return frame starts here */
-	unsigned long ip;
-
-	union {
-		/* CS selector */
-		u16		cs;
-		/* The extended 64-bit data slot containing CS */
-		u64		csx;
-		/* The FRED CS extension */
-		struct fred_cs	fred_cs;
-	};
-
-	unsigned long flags;
-	unsigned long sp;
-
-	union {
-		/* SS selector */
-		u16		ss;
-		/* The extended 64-bit data slot containing SS */
-		u64		ssx;
-		/* The FRED SS extension */
-		struct fred_ss	fred_ss;
-	};
-
-	/*
-	 * Top of stack on IDT systems, while FRED systems have extra fields
-	 * defined above for storing exception related information, e.g. CR2 or
-	 * DR6.
-	 */
-};
-```
-
-上边的注释写的很明白，`unsigned long orig_ax;`就是存放系统调用号的
 
 到此入口汇编就结束了，接下来就是C语言部分
 
@@ -731,9 +646,8 @@ __SYSCALL(3, sys_close)
 只不过这里ctags和clang就失效了，无法跳转到__x64_sys_clone，只能用gdb调调看看咋回事
 
 ``` gdb
-(gdb) info b
-Num     Type           Disp Enb Address            What
-5       breakpoint     keep y   0xffffffff81085ed0 in __x64_sys_clone at kernel/fork.c:2911
+(gdb) b __x64_sys_clone
+Breakpoint 2 at 0xffffffff81085ed0: file kernel/fork.c, line 2911.
 ```
 
 发现目标函数在kernel/fork.c的2911行
@@ -850,7 +764,8 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
   - [X64指令文档](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html?wapkw=x86-64%20instruction%20set)
   - [内核文档](https://docs.kernel.org/)
 - 博客
-  * [某佬博客](https://asjet.dev/2024/07/syscall_irl/)
+  * [某佬博客1](https://asjet.dev/2024/07/syscall_irl/)
+  * [某佬博客2](https://dumphex.github.io/2020/03/01/syscall/)
 - 视频
   * [北邮Young老师的汇编扫盲](https://www.bilibili.com/video/BV1gC4y1b7y8?p=1)
 - 网站
